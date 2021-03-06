@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DungeonGenerator:jar">
+    <output-path>$USER_HOME$/Desktop/Spigot/server-1.16.5/plugins</output-path>
+    <root id="archive" name="DungeonGenerator.jar">
+      <element id="module-output" name="DungeonGenerator" />
+    </root>
+  </artifact>
+</component>
