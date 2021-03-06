@@ -13,18 +13,24 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import io.github.NolzCoding.Main;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import scala.Int;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 public class Command implements CommandExecutor {
@@ -33,29 +39,28 @@ public class Command implements CommandExecutor {
 
 
     @Override
-    public boolean onCommand(CommandSender commandSender, org.bukkit.command.Command command, String s, String[] strings) {
+    public boolean onCommand( CommandSender commandSender , org.bukkit.command.Command command, String s, String[] strings) {
         if (command.getName().equalsIgnoreCase("gend")){
             if (commandSender instanceof Player) {
-                ArrayList<Integer> arrayList = createArray(1, 5);
+                ArrayList<Integer> arrayList = createMap(15);
+
                 int dim = (int) Math.sqrt(arrayList.size());
                 for (int x = 0; x < dim; x++) {
                     for (int y = 0; y < dim; y++) {
                         if (arrayList.get(y*x) == 0) {
                             Location loc = ((Player) commandSender).getLocation();
-                            loc.add(x *5, 0, y*5);
+                            loc.add(x * 5, 0, y * 5
+                            );
                             pastemap(loc);
                         }
 
                     }
                 }
-
-
             }
         }
-
-        return false;
+        System.out.println("t");
+        return true;
     }
-
     private void pastemap(Location orgin) {
         File file = new File(main.getDataFolder(), "scem/square.schem");
         System.out.println(file.getName());
@@ -65,8 +70,8 @@ public class Command implements CommandExecutor {
 
     private ArrayList<Integer> createMap(int dimensions) {
         ArrayList<Integer> map = createArray(1, dimensions);
-        int maxTunnels = 3;
-        int maxLenght = 3;
+        int maxTunnels = 7;
+        int maxLenght = 7;
         int row = random(0, dimensions);
         int column = random(0, dimensions);
 
@@ -75,17 +80,19 @@ public class Command implements CommandExecutor {
         dirs.add(newdir(1, 0));
         dirs.add(newdir(0, -1));
         dirs.add(newdir(0, 1));
-        ArrayList<Integer> lastDir = newdir(-1, 0);
+        ArrayList<Integer> lastDir = dirs.get(random(0,dirs.size() -1));
         ArrayList<Integer> randomDir;
+        LocalDateTime then = LocalDateTime.now(); //Stops the shit from running for ever
         while (maxLenght > 0 && maxTunnels > 0 && dimensions > 0) {
             do {
                 randomDir = dirs.get(random(0,dirs.size() -1));
+                if (ChronoUnit.SECONDS.between(then, LocalDateTime.now()) >= 2) break; //Stops the shit from running for ever
             } while ((randomDir.get(0).equals(-lastDir.get(0)) &&
                     randomDir.get(1).equals(-lastDir.get(1))) ||
                     (randomDir.get(0).equals(lastDir.get(0)) &&
                     randomDir.get(1).equals(lastDir.get(1)))
             );
-
+            if (ChronoUnit.SECONDS.between(then, LocalDateTime.now()) >= 2) break; //Stops the shit from running for ever
             int randomLenght = random(0, maxLenght);
             int tunnelLenght = 0;
             while (tunnelLenght < randomLenght) {
