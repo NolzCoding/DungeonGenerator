@@ -1,0 +1,8 @@
+name: DungeonGenerator
+version: 0.1
+main: io.github.NolzCoding.Main
+depend:
+  - WorldEdit
+commands:
+  gend:
+    description: generates a dungeon
