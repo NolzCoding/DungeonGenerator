@@ -11,6 +11,7 @@ public class Main extends JavaPlugin {
     private static Main main;
     private static final Logger log = Logger.getLogger("Minecraft");
     private WorldEdit worldEdit;
+
     @Override
     public void onEnable() {
         main = this;
