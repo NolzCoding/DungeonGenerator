@@ -1,6 +1,7 @@
 name: DungeonGenerator
 version: 0.1
 main: io.github.NolzCoding.Main
+api-version: 1.13
 depend:
   - WorldEdit
 commands:

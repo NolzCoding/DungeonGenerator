@@ -12,6 +12,7 @@ public class Command implements CommandExecutor {
     private final Main main = Main.getMain();
     private final MapGenerator mapGenerator = new MapGenerator();
 
+    //test
 
     @Override
     public boolean onCommand( CommandSender commandSender , org.bukkit.command.Command command, String s, String[] strings) {
