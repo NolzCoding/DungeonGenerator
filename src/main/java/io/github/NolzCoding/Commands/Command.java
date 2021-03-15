@@ -1,17 +1,12 @@
 package io.github.NolzCoding.Commands;
 
-import com.sk89q.worldedit.WorldEdit;
-import io.github.NolzCoding.Main;
 import io.github.NolzCoding.Utils.AsyncMapGenerator;
-import io.github.NolzCoding.Utils.MapGenerator;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
 public class Command implements CommandExecutor {
-    private final Main main = Main.getMain();
-    private final MapGenerator mapGenerator = new MapGenerator();
     private final AsyncMapGenerator asyncMapGenerator = new AsyncMapGenerator();
     //test
 
