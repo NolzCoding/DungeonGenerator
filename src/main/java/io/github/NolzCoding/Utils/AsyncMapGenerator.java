@@ -33,19 +33,21 @@ public class AsyncMapGenerator {
     private final WorldEdit worldEdit = WorldEdit.getInstance();
     private final Main main = Main.getMain();
     public void createmap(int dim, int maxT, int maxL, Location loc) {
+        LocalDateTime time = LocalDateTime.now();
         CallBack<ArrayList<Integer>> callback = response -> {
+            Bukkit.getLogger().info("Time spent generating: " + ChronoUnit.MILLIS.between(time, LocalDateTime.now()) + "ms");
             pastepart(loc, response, dim);
         };
         new BukkitRunnable() {
             @Override
             public void run() {
                 int maxTunnels = maxT;
-                Location location = loc;
 
                 Bukkit.getLogger().info("GENERATING PLEASE WAIT");
                 ArrayList<Integer> map = createArray(1, dim);
                 int row = random(0, dim);
                 int column = random(0, dim);
+                System.out.println(column + " - " + row);
                 ArrayList<ArrayList<Integer>> dirs = new ArrayList<>();
                 dirs.add(newdir(-1, 0));
                 dirs.add(newdir(1, 0));
@@ -53,18 +55,17 @@ public class AsyncMapGenerator {
                 dirs.add(newdir(0, 1));
                 ArrayList<Integer> lastDir = dirs.get(random(0,dirs.size() -1));
                 ArrayList<Integer> randomDir;
-                LocalDateTime then = LocalDateTime.now(); //Stops the shit from running for ever, prob teribble idea
 
                 while (maxL > 0 && maxTunnels > 0 && dim > 0) {
                     do {
                         randomDir = dirs.get(random(0,dirs.size() -1));
-                        if (ChronoUnit.SECONDS.between(then, LocalDateTime.now()) >= 2) break; //Stops the shit from running for ever
+
                     } while ((randomDir.get(0).equals(-lastDir.get(0)) &&
                             randomDir.get(1).equals(-lastDir.get(1))) ||
                             (randomDir.get(0).equals(lastDir.get(0)) &&
-                                    randomDir.get(1).equals(lastDir.get(1)))
+                            randomDir.get(1).equals(lastDir.get(1)))
                     );
-                    if (ChronoUnit.SECONDS.between(then, LocalDateTime.now()) >= 2) break; //Stops the shit from running for ever
+
                     int randomLenght = random(0, maxL);
                     int tunnelLenght = 0;
                     while (tunnelLenght < randomLenght) {
