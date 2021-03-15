@@ -29,6 +29,7 @@ public class MapGenerator {
     private final WorldEdit worldEdit = WorldEdit.getInstance();
     private final Main main = Main.getMain();
 
+
     public void createMap(int dimensions, int maxTunnels, int maxLenght, Location location) {
         Bukkit.getLogger().info("GENERATING PLEASE WAIT");
         ArrayList<Integer> map = createArray(1, dimensions);
@@ -42,6 +43,7 @@ public class MapGenerator {
         ArrayList<Integer> lastDir = dirs.get(random(0,dirs.size() -1));
         ArrayList<Integer> randomDir;
         LocalDateTime then = LocalDateTime.now(); //Stops the shit from running for ever, prob teribble idea
+
         while (maxLenght > 0 && maxTunnels > 0 && dimensions > 0) {
             do {
                 randomDir = dirs.get(random(0,dirs.size() -1));
